@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/pratvish/MarsDevs/django_prac/admin'
+docker-compose up
+make: Leaving directory '/home/pratvish/MarsDevs/django_prac/admin'
+ 

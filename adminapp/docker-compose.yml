@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ms_adminapp
+    image: ms_admin:app
+    command: 'python main.py'
+    ports:
+      - 8001:5000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ms_adminapp_consumer
+    image: ms_admin:app_consumer
+    command: 'python consumer.py'
+    depends_on:
+      - db
+
+
+  db:
+    image: mysql:5.7.22
+    container_name: ms_mysqlapp
+    restart: always
+    environment:
+      MYSQL_DATABASE: adminapp
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .dbdata:/var/lib/mysql
+    ports:
+      - 3308:3306
